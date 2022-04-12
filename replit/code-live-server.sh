@@ -20,20 +20,16 @@ if [[ ! -f "/tmp/isNixConfigured" && -f ".replit_is_active" ]]; then
 fi
 
 if [ ! -d "code_server" ]; then
-  if [[ ! -f ".replit_is_active" && ! -f "/tmp/setup_replit_bypass" ]]; then 
+  if [[ ! -f ".replit_is_active" ]]; then 
     read -r -p "Are you using replit? (y/n) " input
  
     case $input in
       [yY][eE][sS]|[yY])
         touch .replit_is_active
-        ;;
-      *)
-        touch /tmp/setup_replit_bypass
+        echo "Please rerun this bash script, to setup coniguration."
+        exit
         ;;
     esac
-    
-    echo "Please rerun this bash script, to setup coniguration."
-    exit
   fi
       
   echo "Downloading code server..."
