@@ -29,6 +29,9 @@ if [ ! -d "code_server" ]; then
         echo "Please rerun this bash script, to setup coniguration."
         exit
         ;;
+      *)
+        touch .noreplit 
+        ;;
     esac
   fi
       
@@ -68,7 +71,14 @@ if [ ! -d "code_server" ]; then
   esac
 
   echo "cert: false" >> .config/code-server/config.yaml
+
+  mkdir -p data/extensions data/user
+fi
+
+# fix for old versions not having user data directories
+if [ -d "data" ]; then
+  mkdir -p data/extensions data/user 
 fi
 
 echo "Starting code server... (0.0.0.0:8000)"
-code_server/code-s*/bin/code-server 
+code_server/code-s*/bin/code-server --config=.config/code-server/config.yaml --user-data-dir=data/user --extensions-dir=data/extensions 
