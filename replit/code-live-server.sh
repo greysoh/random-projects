@@ -6,7 +6,7 @@ if [ ! -f "/tmp/isNixConfigured" ]; then
   echo "        pkgs.bashInteractive" >> replit.nix
   echo "        pkgs.wget" >> replit.nix
   
-  if [ "pkgs.nix.txt" ]; then
+  if [ -f "pkgs.nix.txt" ]; then
     cat pkgs.nix.txt >> replit.nix 
     printf "\n" >> replit.nix
   done
