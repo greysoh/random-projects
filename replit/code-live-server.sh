@@ -1,11 +1,40 @@
+if [[ ! -f "/tmp/isNixConfigured" && -f ".replit_is_active" ]]; then
+  echo "Reconfiguring nix..."
+
+  echo "{ pkgs }: {" > replit.nix
+  echo "deps = [" >> replit.nix
+  echo "        pkgs.bashInteractive" >> replit.nix
+  echo "        pkgs.wget" >> replit.nix
+  
+  if [ -f "pkgs.nix.txt" ]; then
+    cat pkgs.nix.txt >> replit.nix 
+    printf "\n" >> replit.nix
+  fi
+
+  echo "    ];" >> replit.nix
+  echo "}" >> replit.nix
+
+  touch /tmp/isNixConfigured 
+  echo "Reconfigured. Please rerun this repl."
+  exit
+fi
+
 if [ ! -d "code_server" ]; then
-  read -r -p "Are you using replit? (y/n) " input
+  if [[ ! -f ".replit_is_active" && ! -f "/tmp/setup_replit_bypass" ]]; then 
+    read -r -p "Are you using replit? (y/n) " input
  
-  case $input in
-    [yY][eE][sS]|[yY])
-      touch .replit_is_active
-      ;;
-  esac
+    case $input in
+      [yY][eE][sS]|[yY])
+        touch .replit_is_active
+        ;;
+      *)
+        touch /tmp/setup_replit_bypass
+        ;;
+    esac
+    
+    echo "Please rerun this bash script, to setup coniguration."
+    exit
+  fi
       
   echo "Downloading code server..."
   curl -s https://api.github.com/repos/coder/code-server/releases/latest \
@@ -43,27 +72,6 @@ if [ ! -d "code_server" ]; then
   esac
 
   echo "cert: false" >> .config/code-server/config.yaml
-fi
-
-if [[ ! -f "/tmp/isNixConfigured" && -f ".replit_is_active" ]]; then
-  echo "Reconfiguring nix..."
-
-  echo "{ pkgs }: {" > replit.nix
-  echo "deps = [" >> replit.nix
-  echo "        pkgs.bashInteractive" >> replit.nix
-  echo "        pkgs.wget" >> replit.nix
-  
-  if [ -f "pkgs.nix.txt" ]; then
-    cat pkgs.nix.txt >> replit.nix 
-    printf "\n" >> replit.nix
-  fi
-
-  echo "    ];" >> replit.nix
-  echo "}" >> replit.nix
-
-  touch /tmp/isNixConfigured 
-  echo "Reconfigured. Please rerun this repl."
-  exit
 fi
 
 echo "Starting code server... (0.0.0.0:8000)"
