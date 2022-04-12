@@ -1,5 +1,5 @@
 if [ ! -d "code_server" ]; then
-  read -r -p "Are you using replit? (y/n)" input
+  read -r -p "Are you using replit? (y/n) " input
  
   case $input in
     [yY][eE][sS]|[yY])
@@ -29,7 +29,19 @@ if [ ! -d "code_server" ]; then
   mkdir -p .config/code-server
 
   echo "bind-addr: 0.0.0.0:8000" > .config/code-server/config.yaml
-  echo "auth: none" >> .config/code-server/config.yaml
+
+  read -r -p "Would you like to enable password authentication? [plain-text password] (y/n) " enablePassAuth
+  case $enablePassAuth in
+    [yY][eE][sS]|[yY])
+      read -r -p "Set new plain-text password: " passwd
+      echo "auth: password" >> .config/code-server/config.yaml
+      echo "password: $passwd" >> .config/code-server/config.yaml
+      ;;
+    *) 
+      echo "auth: none" >> .config/code-server/config.yaml
+      ;;
+  esac
+
   echo "cert: false" >> .config/code-server/config.yaml
 fi
 
@@ -54,5 +66,5 @@ if [[ ! -f "/tmp/isNixConfigured" && -f ".replit_is_active" ]]; then
   exit
 fi
 
-echo "Starting code server..."
-code_server/code-s*/bin/code-server
+echo "Starting code server... (0.0.0.0:8000)"
+code_server/code-s*/bin/code-server 
