@@ -76,7 +76,7 @@ if [ ! -d "code_server" ]; then
 fi
 
 # fix for old versions not having user data directories
-if [ -d "data" ]; then
+if [ ! -d "data" ]; then
   mkdir -p data/extensions data/user 
 fi
 
