@@ -1,0 +1,23 @@
+{
+    "name": "gefn",
+    "version": "0.1.0",
+    "description": "Generate a Geforce Now login using temp mail",
+    "main": "index.js",
+    "scripts": {
+      "install-deno": "echo Warning: This is only for Linux users! && curl -fsSL https://deno.land/install.sh | sh && echo ",
+      "compile": "~/.deno/bin/deno compile --unstable --allow-env --allow-net --allow-run --allow-read --allow-write index.js",
+      "start": "~/.deno/bin/deno run --unstable --allow-env --allow-net --allow-run --allow-read --allow-write index.js",
+      "install": "npm run compile; sudo mv hexpm /bin/hexpm; sudo chmod ugo+rx /bin/hexpm"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/hex0perating/hexpm.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/hex0perating/hexpm/issues"
+    },
+    "homepage": "https://github.com/hex0perating/hexpm#readme"
+  }
