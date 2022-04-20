@@ -15,4 +15,12 @@ app.use((ctx) => {
   );
 });
 
-await app.listen({ port: Deno.env.get("PORT") || 8080 });
+if (Deno.args[0] == "-c") {
+    let arr = [];
+
+    for (var i = 1; i < Deno.args.length; i++) arr.push(Deno.args[i]);
+
+    console.log(uwuifier.uwuifySentence(arr.join(" ")));
+} else {
+    await app.listen({ port: Deno.env.get("PORT") || 8080 });
+}
