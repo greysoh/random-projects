@@ -1,0 +1,14 @@
+{
+    "name": "gefn",
+    "version": "0.1.0",
+    "description": "Generate a Geforce Now login using temp mail",
+    "main": "index.js",
+    "scripts": {
+      "install-deno": "curl -fsSL https://deno.land/install.sh | sh && echo ",
+      "compile": "~/.deno/bin/deno compile --allow-env --allow-net --allow-read --allow-write index.js",
+      "start": "~/.deno/bin/deno run --allow-env --allow-net --allow-read --allow-write index.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT"
+}
