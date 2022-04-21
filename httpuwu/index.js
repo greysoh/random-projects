@@ -13,6 +13,8 @@ app.use((ctx) => {
   ctx.response.body = uwuifier.uwuifySentence(
     ctx.request.url.searchParams.get("text")
   );
+  
+  ctx.response.headers.set("Access-Control-Allow-Origin", "*");
 });
 
 if (Deno.args[0] == "-c") {
